@@ -1,0 +1,218 @@
+.to-do-list {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    justify-items: center;
+}
+
+.input-section {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.input-section input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.input-section button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.filter-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.filter-section button {
+    padding: 8px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    color: #000;
+    border-radius: 4px;
+}
+
+.filter-section button.active {
+    background: #007bff;
+    color: white;
+}
+
+.stats {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.bulk-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 6px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.bulk-actions button {
+    padding: 4px 8px;
+    background: #f8f9fa;
+    color: #000;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.bulk-actions button:hover {
+    background: #e9ecef;
+    transform: translateY(-1px);
+}
+
+.bulk-actions button:nth-child(1) { background: #e3f2fd; }
+.bulk-actions button:nth-child(2) { background: #fff3e0; }
+.bulk-actions button:nth-child(3) { background: #fce4ec; }
+.bulk-actions button:nth-child(4) { background: #e8f5e9; }
+.bulk-actions button:nth-child(5) { background: #f3e5f5; }
+
+.bulk-actions button:hover:nth-child(1) { background: #bbdefb; }
+.bulk-actions button:hover:nth-child(2) { background: #ffe0b2; }
+.bulk-actions button:hover:nth-child(3) { background: #f8bbd0; }
+.bulk-actions button:hover:nth-child(4) { background: #c8e6c9; }
+.bulk-actions button:hover:nth-child(5) { background: #e1bee7; }
+
+ol {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+li {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    gap: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+li:hover {
+    background: #f9f9f9;
+}
+
+.task-text {
+    color: #000;
+    font-size: 16px;
+}
+
+.completed .task-text {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.task-actions {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    justify-items: end;
+}
+
+li:hover .task-actions {
+    opacity: 1;
+}
+
+.complete-btn {
+    padding: 4px 8px;
+    background: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.complete-btn.completed {
+    background: #ff1493;
+}
+
+.move-btn {
+    padding: 4px 8px;
+    background: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.delete-btn {
+    padding: 4px 8px;
+    background: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+button {
+    transition: all 0.2s;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    opacity: 0.9;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .to-do-list {
+        padding: 10px;
+    }
+    
+    .input-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .task-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .bulk-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+} 
