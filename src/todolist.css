@@ -1,218 +1,271 @@
-.to-do-list {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    color: #fff;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    justify-items: center;
+/* 기본 스타일 */
+:root {
+    /* 라이트 모드 색상 */
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --border-color: #e0e0e0;
+    --primary-color: #ff6b00;
+    --primary-hover: #ff8533;
+    --secondary-color: #ff8533;
+    --secondary-hover: #ff9d4d;
+    --completed-color: #ff8533;
+    --input-bg: #f5f5f5;
+    --error-color: #ff3333;
 }
 
+/* 다크 모드 색상 */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --border-color: #333333;
+    --primary-color: #ff6b00;
+    --primary-hover: #ff8533;
+    --secondary-color: #ff8533;
+    --secondary-hover: #ff9d4d;
+    --completed-color: #ff8533;
+    --input-bg: #2d2d2d;
+    --error-color: #ff6666;
+}
+
+/* 전체 컨테이너 */
+.to-do-list {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* 헤더 */
+.to-do-list h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* 입력 영역 */
 .input-section {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 10px;
-    align-items: center;
-    width: 100%;
-    max-width: 600px;
+    margin-bottom: 20px;
 }
 
 .input-section input {
-    padding: 10px;
-    border: 1px solid #ddd;
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
-    font-size: 16px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
 }
 
 .input-section button {
-    padding: 10px 20px;
-    background: #007bff;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    transition: background-color 0.2s;
 }
 
+.input-section button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* 필터 섹션 */
 .filter-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    width: 100%;
-    max-width: 600px;
+    margin-bottom: 20px;
 }
 
 .filter-section button {
-    padding: 8px;
-    background: #f0f0f0;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    color: #000;
+    width: 100%;
+    padding: 8px 12px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
     border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .filter-section button.active {
-    background: #007bff;
-    color: white;
+    background-color: var(--primary-color);
 }
 
+.filter-section button:hover {
+    background-color: var(--secondary-hover);
+}
+
+/* 통계 */
 .stats {
     text-align: center;
-    color: #666;
-    font-size: 14px;
+    margin-bottom: 20px;
+    color: var(--text-color);
 }
 
+/* 일괄 작업 버튼 */
 .bulk-actions {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 6px;
-    width: 100%;
-    max-width: 600px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
 .bulk-actions button {
-    padding: 4px 8px;
-    background: #f8f9fa;
-    color: #000;
-    border: 1px solid #e9ecef;
+    width: 100%;
+    padding: 8px 10px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 12px;
-    transition: all 0.2s;
+    font-size: 13px;
+    transition: background-color 0.2s;
 }
 
 .bulk-actions button:hover {
-    background: #e9ecef;
-    transform: translateY(-1px);
+    background-color: var(--secondary-hover);
 }
 
-.bulk-actions button:nth-child(1) { background: #e3f2fd; }
-.bulk-actions button:nth-child(2) { background: #fff3e0; }
-.bulk-actions button:nth-child(3) { background: #fce4ec; }
-.bulk-actions button:nth-child(4) { background: #e8f5e9; }
-.bulk-actions button:nth-child(5) { background: #f3e5f5; }
-
-.bulk-actions button:hover:nth-child(1) { background: #bbdefb; }
-.bulk-actions button:hover:nth-child(2) { background: #ffe0b2; }
-.bulk-actions button:hover:nth-child(3) { background: #f8bbd0; }
-.bulk-actions button:hover:nth-child(4) { background: #c8e6c9; }
-.bulk-actions button:hover:nth-child(5) { background: #e1bee7; }
-
+/* 할 일 목록 */
 ol {
     list-style: none;
     padding: 0;
-    display: grid;
-    gap: 10px;
-    width: 100%;
-    max-width: 600px;
-}
-
-li {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    padding: 15px;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    gap: 15px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-li:hover {
-    background: #f9f9f9;
-}
-
-.task-text {
-    color: #000;
-    font-size: 16px;
-}
-
-.completed .task-text {
-    text-decoration: line-through;
-    color: #888;
-}
-
-.task-actions {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    gap: 4px;
-    opacity: 0;
-    transition: opacity 0.2s;
-    justify-items: end;
-}
-
-li:hover .task-actions {
-    opacity: 1;
-}
-
-.complete-btn {
-    padding: 4px 8px;
-    background: #ff69b4;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.complete-btn.completed {
-    background: #ff1493;
-}
-
-.move-btn {
-    padding: 4px 8px;
-    background: #ff69b4;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.delete-btn {
-    padding: 4px 8px;
-    background: #ff69b4;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-button {
-    transition: all 0.2s;
-}
-
-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    opacity: 0.9;
-}
-
-input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
     margin: 0;
 }
 
+li {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    background-color: var(--input-bg);
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+/* 체크박스 스타일 */
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+/* 할 일 텍스트 */
+.task-text {
+    flex: 1;
+    margin-right: 12px;
+    color: var(--text-color);
+}
+
+/* 완료된 할 일 */
+.completed .task-text {
+    text-decoration: line-through;
+    color: var(--completed-color);
+}
+
+/* 선택된 할 일 */
+.selected {
+    background-color: rgba(255, 107, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+/* 작업 버튼들 */
+.task-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.task-actions button {
+    width: 100%;
+    padding: 4px 8px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+
+.task-actions button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* 완료 버튼 */
+.complete-btn.completed {
+    background-color: var(--completed-color);
+}
+
+/* 에러 메시지 */
+.error-message {
+    color: var(--error-color);
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: rgba(255, 51, 51, 0.1);
+    border-radius: 4px;
+}
+
+/* 다크모드 토글 버튼 */
+.theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.theme-toggle:hover {
+    background-color: var(--primary-hover);
+    transform: scale(1.1);
+}
+
+.theme-toggle::before {
+    content: "🌞";
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .theme-toggle::before {
+    content: "🌙";
+    transform: rotate(180deg);
+}
+
+/* 반응형 디자인 */
 @media (max-width: 600px) {
     .to-do-list {
-        padding: 10px;
+        margin: 20px;
+        padding: 15px;
     }
-    
-    .input-section {
-        grid-template-columns: 1fr;
-    }
-    
-    .task-actions {
+
+    .filter-section,
+    .bulk-actions {
         grid-template-columns: repeat(2, 1fr);
     }
-    
-    .bulk-actions {
+
+    .task-actions {
         grid-template-columns: repeat(2, 1fr);
     }
 } 

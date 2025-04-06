@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./todolist.css";
 
 /* 
@@ -101,6 +101,7 @@ function TodoList() {
     - filter: 현재 필터 상태
     - isAllSelected: 전체 선택 상태
     - error: 에러 메시지
+    - isDarkMode: 다크모드 상태
     */
     const [tasks, setTasks] = useState(() => {
         const savedTasks = localStorage.getItem('todos');
@@ -114,6 +115,10 @@ function TodoList() {
     const [filter, setFilter] = useState("all");
     const [isAllSelected, setIsAllSelected] = useState(false);
     const [error, setError] = useState(null);
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        return localStorage.getItem('darkMode') === 'true';
+    });
+    const isAddingRef = useRef(false);
 
     /* 
     4-2: 로컬 스토리지 연동
@@ -122,6 +127,20 @@ function TodoList() {
     useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(tasks));
     }, [tasks]);
+
+    // 다크모드 토글 함수
+    const toggleDarkMode = () => {
+        setIsDarkMode(prev => {
+            const newMode = !prev;
+            localStorage.setItem('darkMode', newMode);
+            return newMode;
+        });
+    };
+
+    // 다크모드 적용
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+    }, [isDarkMode]);
 
     /* 
     4-3: 입력값 검증 함수
@@ -146,14 +165,26 @@ function TodoList() {
     */
     // 할 일 추가
     const addTask = () => {
-        if (!validateTask(newTask)) return;
+        if (isAddingRef.current) return;
+        isAddingRef.current = true;
+
+        const trimmedTask = newTask.trim();
+        if (!validateTask(trimmedTask)) {
+            isAddingRef.current = false;
+            return;
+        }
         
         setTasks(prevTasks => [...prevTasks, { 
-            text: newTask, 
+            text: trimmedTask, 
             completed: false, 
             selected: false 
         }]);
         setNewTask("");
+        
+        // 다음 실행을 위해 플래그 초기화
+        setTimeout(() => {
+            isAddingRef.current = false;
+        }, 100);
     };
 
     // 할 일 수정
@@ -239,6 +270,11 @@ function TodoList() {
     */
     return (
         <div className="to-do-list">
+            <button 
+                className="theme-toggle" 
+                onClick={toggleDarkMode}
+                aria-label={isDarkMode ? '라이트 모드로 전환' : '다크 모드로 전환'}
+            />
             <h1>To-Do List</h1>
             
             {error && <div className="error-message">{error}</div>}
@@ -249,7 +285,12 @@ function TodoList() {
                     placeholder="새로운 할 일 추가" 
                     value={newTask} 
                     onChange={(e) => setNewTask(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && addTask()}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            addTask();
+                        }
+                    }}
                 />
                 <button onClick={addTask}>추가</button>
             </div>
